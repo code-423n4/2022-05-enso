@@ -22,6 +22,7 @@ import {
 	InitialState
 } from '../lib/encode'
 import { DEFAULT_DEPOSIT_SLIPPAGE } from '../lib/constants'
+import ERC20 from '@uniswap/v2-periphery/build/ERC20.json'
 
 const { constants, getContractFactory, getSigners } = ethers
 const { AddressZero, WeiPerEther } = constants
@@ -233,11 +234,10 @@ describe('MulticallRouter', function () {
 		const tokens = await strategy.items()
 		const [actualTotal, estimates] = await oracle.estimateStrategy(strategy.address)
 		const total = actualTotal.sub(amount)
-		const Erc20Factory = await getContractFactory('ERC20Mock')
 		let wethInStrategy = false
 		// Sell loop
 		for (let i = 0; i < tokens.length; i++) {
-			const token = Erc20Factory.attach(tokens[i])
+			const token = new Contract(tokens[i], ERC20.abi, accounts[1])
 			const estimatedValue = ethers.BigNumber.from(estimates[i])
 			const expectedValue = ethers.BigNumber.from(await getExpectedTokenValue(total, token.address, strategy))
 			if (token.address.toLowerCase() != weth.address.toLowerCase()) {
@@ -272,7 +272,7 @@ describe('MulticallRouter', function () {
 		calls.push(encodeTransferFrom(weth, strategy.address, accounts[1].address, amount))
 		// Buy loop
 		for (let i = 0; i < buyLoop.length; i++) {
-			const token = Erc20Factory.attach(buyLoop[i].token)
+			const token = new Contract(buyLoop[i].token, ERC20.abi, accounts[1])
 			const estimatedValue = ethers.BigNumber.from(buyLoop[i].estimate)
 			if (token.address.toLowerCase() != weth.address.toLowerCase()) {
 				if (!wethInStrategy && i == buyLoop.length - 1) {
@@ -440,10 +440,9 @@ describe('MulticallRouter', function () {
 	it('Should fail to restructure: too much slippage', async function () {
 		const currentItems = await strategy.items()
 		const calls = [] as Multicall[]
-		const Erc20Factory = await getContractFactory('ERC20Mock')
 		for (let i = 0; i < currentItems.length; i++) {
 			if (currentItems[i] !== tokens[1].address && currentItems[i] !== weth.address) {
-				const token = Erc20Factory.attach(currentItems[i])
+				const token = new Contract(currentItems[i], ERC20.abi, accounts[1])
 				const amount = await token.balanceOf(strategy.address)
 				calls.push(
 					encodeDelegateSwap(
@@ -480,10 +479,9 @@ describe('MulticallRouter', function () {
 	it('Should fail to restructure: out of balance', async function () {
 		const currentItems = await strategy.items()
 		const calls = [] as Multicall[]
-		const Erc20Factory = await getContractFactory('ERC20Mock')
 		for (let i = 0; i < currentItems.length; i++) {
 			if (currentItems[i] !== tokens[1].address && currentItems[i] !== weth.address) {
-				const token = Erc20Factory.attach(currentItems[i])
+				const token = new Contract(currentItems[i], ERC20.abi, accounts[1])
 				const amount = await token.balanceOf(strategy.address)
 				calls.push(
 					encodeDelegateSwap(
@@ -511,10 +509,9 @@ describe('MulticallRouter', function () {
 	it('Should finalize structure', async function () {
 		const currentItems = await strategy.items()
 		const calls = [] as Multicall[]
-		const Erc20Factory = await getContractFactory('ERC20Mock')
 		for (let i = 0; i < currentItems.length; i++) {
 			if (currentItems[i] !== tokens[1].address && currentItems[i] !== weth.address) {
-				const token = Erc20Factory.attach(currentItems[i])
+				const token = new Contract(currentItems[i], ERC20.abi, accounts[1])
 				const amount = await token.balanceOf(strategy.address)
 				calls.push(
 					encodeDelegateSwap(
