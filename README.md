@@ -121,10 +121,10 @@ The contract owner has the ability to upgrade the StrategyController and Strateg
 #### Manager
 A manager controls many of the core functions for a strategy. They are able to rebalance or restructure a strategy. They can update values like the rebalance threshold, rebalance/restructure slippage, and timelock. However, restructuring or updating values requires them to wait out the timelock period before they can finalize their changes, this is to give users time to exit if they are dissatisfied with proposed changes.
 
-While the owner of the contracts is able to deploy a new Strategy implementation on the platform, only the manager is able to upgrade their strategy to that the new version.
+While the owner of the contracts is able to deploy a new Strategy implementation on the platform, only the manager is able to upgrade their strategy to the new version.
 
 #### User
-A user may invest in a strategy. They have the ability to deposit into a strategy or withdraw (either by trading their tokens for ETH/WETH or withdrawing the tokens directly) from a strategy. Since all strategies are ERC-20 compatible, the user is free to transfer their strategy tokens to whomever the like.
+A user may invest in a strategy. They have the ability to deposit into a strategy or withdraw (either by trading their tokens for ETH/WETH or withdrawing the tokens directly) from a strategy. Since all strategies are ERC-20 compatible, the user is free to transfer their strategy tokens to whomever they like.
 
 ### Architecture Choice
 
