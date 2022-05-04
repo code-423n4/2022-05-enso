@@ -123,10 +123,4 @@ Users can nest multiple calls together, e.g.
 ### FullRouter?
 
 
-
-## FAQ
-
-### 
-
-
 ## Preparing local environment
