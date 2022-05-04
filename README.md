@@ -91,6 +91,11 @@ All solidity files are included in scope, apart from [contracts/test](https://gi
 
 
 ## Info
+Social trading application whereby `anyone` can create a strategy, and can have others invest into this strategy.  The creator manages the strategy, and if `social` is enabled then others can invest into this strategy.  If `restructure` enabled then manager can change the structure:
+  1. First structure: WETH 50%/DAI 50%
+  2. Second structure: WETH 50%/USDC 50%
+
+`timelock` when the creator wants to change the structure they propose the structure, and then will need to wait `x` hours `timelock` until they can execute on the structure - this is to prevent against deploying own token then restructuring and misusing investor funds.
 
 ### Access Control
 
