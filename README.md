@@ -9,7 +9,7 @@
 
 
 ## Contact us ☎️
-1. You can contact us inside of the [code4rena discord](https://discord.gg/gaAMjhX5) 
+1. You can contact us inside of the [code4rena discord](https://discord.gg/gaAMjhX5)
 2. Or you can join our new private discord for only code4rena wardens where you will be allocated a private channel to be able to speak directly with the whole team - instead of sending a DM then waiting for a response... instead you get the whole team available. - [join in this link](https://discord.gg/rHYTxt34Uy)
 
 
@@ -106,16 +106,42 @@ Difference choices of exchanges:
   - Kyber
   - Synthetix
 
-Users can nest multiple calls together, e.g. 
-  1. UniSwap ETH > DAI 
+Users can nest multiple calls together, e.g.
+  1. UniSwap ETH > DAI
   2. Compound DAI > cDAI
 
 
 ### Access Control
 
+Users of these contracts can be divided into three groups: owner, managers, and users.
+
+#### Owner
+The contract owner has the ability to upgrade the StrategyController and StrategyProxyAdmin. The owner also has the ability register the tokens in TokenRegistry, UniswapV3Registry, ChainlinkRegistry, and CurveDepositZapRegistry. These registries are used the Oracles and Adapters to estimate values or facilitate swaps. Finally, the owner is able to update the contract addresses that are stored on the StrategyProxyFactory such as oracle, whitelist, or strategy implementation.
+
+#### Manager
+A manager controls many of the core functions for a strategy. They are able to rebalance or restructure a strategy. They can update values like the rebalance threshold, rebalance/restructure slippage, and timelock. However, restructuring or updating values requires them to wait out the timelock period before they can finalize their changes, this is to give users time to exit if they are dissatisfied with proposed changes.
+
+While the owner of the contracts is able to deploy a new Strategy implementation on the platform, only the manager is able to upgrade their strategy to that the new version.
+
+#### User
+A user may invest in a strategy. They have the ability to deposit into a strategy or withdraw (either by trading their tokens for ETH/WETH or withdrawing the tokens directly) from a strategy. Since all strategies are ERC-20 compatible, the user is free to transfer their strategy tokens to whomever the like.
+
 ### Architecture Choice
 
+#### Strategy
+The Strategy contract is an ERC-20 token that stores other ERC-20 tokens and holds in its state any data related to the strategy composition. It has several functions that can only be called by the StrategyController, such as approving tokens held by the Strategy to be used by other contracts.
 
+#### StrategyController
+This contract has special privileges over the Strategy contracts. Most functions are only available to the manager of the strategy that is being called. With the StrategyController, a manager may rebalance or restructure a strategy by trading tokens via a Router contract. A Router is given temporary approval over a strategy's tokens. At the end of a transaction, the EnsoOracle is consulted to ensure there is no value loss to the strategy.
+
+#### Routers
+The routers are used to handle all trading logic for strategies. They are given approval over the strategy tokens and can deposit, withdraw, and swap tokens in order to achieve the expected outcome of the function being called. Routers will use the current estimated values of a strategy's tokens and compare it to a strategy's expected values based on each token's percentage stored in the Strategy contract. When swapping tokens, the router does a delegate call to the `swap` function of an adapter for the particular exchange or protocol. The router relies on `tradeData` that is stored in the Strategy contract to determine which adapters to use for swapping. Some trades can use multiple adapters and tokens to get into the correct position.
+
+#### Adapters
+Adapters are used to give a common interface to all exchanges or protocols that are supported by Enso. They implement the `swap` function which gets called by a router. The `swap` function only supports exchanging one token for another token.
+
+#### Oracle
+The oracle is used to estimate the value of a strategy. It does this by querying the strategy for the tokens that it holds and estimating each token balance in ETH. It relies on the TokenRegistry to determine which protocol a token belongs to and using a protocol-specific estimator to determine the token value. For basic tokens that are not part of a DeFi protocol, we rely on our UniswapV3Oracle or ChainlinkOracle to determine the token value.
 
 # Potential areas for concern
 
