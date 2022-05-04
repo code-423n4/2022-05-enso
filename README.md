@@ -124,3 +124,13 @@ Users can nest multiple calls together, e.g.
 
 
 ## Preparing local environment
+
+### Install
+`yarn install`
+
+### Compile
+`yarn build`
+
+### Test
+should update [.env_example](.env_example) for tests to run from mainnet fork
+`yarn test`
