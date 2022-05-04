@@ -19,7 +19,8 @@
 - *Tests located in:* [tests](/test/)
 - *Helpers located in:* [lib](/lib/)
 - *Docs located at:* [docs.enso.finance](https://docs.enso.finance/docs/smart-contracts/core/overview)
-- *Live application:* *Will be live 22:00 UTC on 5/05/22, will update README when live - DM @Connor | Enso#0001 for whitelisted access*
+- *Live application overview:* [youtube link](https://www.youtube.com/watch?v=OlDbX2twCMQ)
+- *Live application access:* join the private discord, send your address, we will whitelist you
 - *Website:* [enso.finance](https://www.enso.finance/)
 - *Public discord:* [enso-finance](https://discord.gg/enso-finance)
 
