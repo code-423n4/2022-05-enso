@@ -132,5 +132,5 @@ Users can nest multiple calls together, e.g.
 `yarn build`
 
 ### Test
-should update [.env_example](.env_example) for tests to run from mainnet fork
+should update [.env_example](.env_example) for tests to run from mainnet fork before testing
 `yarn test`
