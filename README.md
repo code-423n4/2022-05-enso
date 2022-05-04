@@ -144,5 +144,5 @@ Adapters are the main point of interaction between Enso strategies and the wider
 `yarn build`
 
 ### Test
-should update [.env_example](.env_example) for tests to run from mainnet fork before testing  
+should update [.env_example](https://github.com/code-423n4/2022-05-enso/blob/main/.env_example) for tests to run from mainnet fork before testing  
 `yarn test`
