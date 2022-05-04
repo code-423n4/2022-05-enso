@@ -97,6 +97,18 @@ Social trading application whereby `anyone` can create a strategy, and can have 
 
 `timelock` when the creator wants to change the structure they propose the structure, and then will need to wait `x` hours `timelock` until they can execute on the structure - this is to prevent against deploying own token then restructuring and misusing investor funds.
 
+Difference choices of exchanges:
+  - Curve
+  - UniV2
+  - UniV3
+  - Curve
+  - Kyber
+  - Synthetix
+
+Users can nest multiple calls together, e.g. 
+  1. UniSwap ETH > DAI 
+  2. Compound DAI > cDAI
+
 ### Access Control
 
 ### Architecture Choice
