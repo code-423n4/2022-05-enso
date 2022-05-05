@@ -116,7 +116,7 @@ Users can nest multiple calls together, e.g.
 Users of these contracts can be divided into three groups: owner, managers, and users.
 
 #### Owner
-The contract owner has the ability to upgrade the StrategyController and StrategyProxyAdmin. The owner also has the ability register the tokens in TokenRegistry, UniswapV3Registry, ChainlinkRegistry, and CurveDepositZapRegistry. These registries are used the Oracles and Adapters to estimate values or facilitate swaps. Finally, the owner is able to update the contract addresses that are stored on the StrategyProxyFactory such as oracle, whitelist, or strategy implementation.
+The contract owner has the ability to upgrade the StrategyController and StrategyProxyFactory. The owner also has the ability register the tokens in TokenRegistry, UniswapV3Registry, ChainlinkRegistry, and CurveDepositZapRegistry. These registries are used the Oracles and Adapters to estimate values or facilitate swaps. Finally, the owner is able to update the contract addresses that are stored on the StrategyProxyFactory such as oracle, whitelist, or strategy implementation.
 
 #### Manager
 A manager controls many of the core functions for a strategy. They are able to rebalance or restructure a strategy. They can update values like the rebalance threshold, rebalance/restructure slippage, and timelock. However, restructuring or updating values requires them to wait out the timelock period before they can finalize their changes, this is to give users time to exit if they are dissatisfied with proposed changes.
