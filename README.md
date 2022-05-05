@@ -29,7 +29,7 @@ All solidity files are included in scope, apart from [contracts/test](https://gi
 | -----------| ----------|-----| -----|
 |[PlatformProxyAdmin](https://github.com/code-423n4/2022-05-enso/blob/main/contracts/PlatformProxyAdmin.sol) | [contracts/](https://github.com/code-423n4/2022-05-enso/tree/main/contracts/) | 101 | ProxyAdmin managing upgradeability of StrategyController and StrategyProxyFactory. 
 | [Strategy](https://github.com/code-423n4/2022-05-enso/blob/main/contracts/Strategy.sol) | ^^ |869 | Comprised of positions along with their data, global thresholds and fees. Is StrategyToken.
-| [StrategyController](https://github.com/code-423n4/2022-05-enso/blob/main/contracts/StrategyController.sol) | ^^ | 784 | ..
+| [StrategyController](https://github.com/code-423n4/2022-05-enso/blob/main/contracts/StrategyController.sol) | ^^ | 784 | Powerhouse contract giving main entrypoint for users to deposit into and withdraw against strategies, for managers to rebalance and restructure their strategies as well as other admin actions. 
 | [StrategyControllerStorage](https://github.com/code-423n4/2022-05-enso/blob/main/contracts/StrategyControllerStorage.sol) | ^^ | 784 | Storage for StrategyController. 
 | [StrategyProxyAdmin](https://github.com/code-423n4/2022-05-enso/blob/main/contracts/StrategyProxyAdmin.sol) | ^^ | 70 | Enables managers of strategies to upgrade their strategy to the latest implementation held by StrategyProxyFactory. 
 | [StrategyProxyFactory](https://github.com/code-423n4/2022-05-enso/blob/main/contracts/StrategyProxyFactory.sol) | ^^ | 297 | Entrypoint for users to create strategies. Exposes administrative functions to update base strategy implementation, add items and estimators to registry, and other admin actions. 
